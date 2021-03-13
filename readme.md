@@ -1,17 +1,17 @@
-# SQLocal
+## SQLocal
 
-## SQLocal is simple orm-like query for local-storage
+### SQLocal is simple orm-like query for local-storage
 
 ### Basic Usage
 
 ##### Insert
-users.query.insert(
+`users.query.insert(
   [
     {name: 'Bill', age: 20, sex: 'male'}, 
     {name: 'Jhon', age: 25, sex: 'male'},
     {name: 'Miranda', age: 30, sex: 'female'}
   ]
-)
+)`
 
 ##### Insert
 `users.query.insert(
