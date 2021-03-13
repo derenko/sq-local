@@ -13,15 +13,6 @@
   ]
 )`
 
-##### Insert
-`users.query.insert(
-  [
-    {name: 'Bill', age: 20, sex: 'male'}, 
-    {name: 'Jhon', age: 25, sex: 'male'},
-    {name: 'Miranda', age: 30, sex: 'female'}
-  ]
-)`
-
 #### Find
 `
   users.query.find({})
@@ -32,7 +23,7 @@
 
 #### Delete 
 `
-  users.query.delete({name: 'Bill'})
+  users.query.delete({ name: 'Bill' })
 `
 
 #### Update
