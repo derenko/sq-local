@@ -1,3 +1,3 @@
 export interface BaseModel {
-  readonly id: string
+  readonly _id: string
 }

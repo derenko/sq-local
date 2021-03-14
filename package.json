@@ -22,7 +22,6 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "import": "0.0.6",
     "lodash": "^4.17.21",
     "uuid": "^8.3.2"
   }

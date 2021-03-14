@@ -1,19 +1,20 @@
 import { StorageConnector } from '@app/storage';
 import { TableAlreadyExistsError, TableDoesntExistsError } from '@app/errors';
-import { QueryTool } from '@app/query';
-
-
+import { QueryStatement } from '@app/query-statement';
 export class Table<T> {
-  readonly query = new QueryTool<T>(this.storage, this.tableName);
+  readonly query = new QueryStatement<T>(this.tableName);
+  private readonly storage = new StorageConnector();
 
-  constructor(private storage: StorageConnector, private tableName: string){}
+  constructor(
+    private tableName: string
+  ){}
 
-  private isTableExist(){
+  private isExist(){
     return this.storage.get(this.tableName);
   }
 
   create(){
-    if(this.isTableExist()){
+    if(this.isExist()){
       throw new TableAlreadyExistsError(this.tableName);
     }
 
@@ -21,17 +22,19 @@ export class Table<T> {
   }
 
   drop(){
-    if(this.isTableExist()) return this.storage.remove(this.tableName);
+    if(this.isExist()) return this.storage.remove(this.tableName);
 
     throw new TableDoesntExistsError(this.tableName);
   }
 
-  showAll(){
-    return this.storage.keys();
-  }
+  oneToOne(){}
+
+  oneToMany(){}
+
+  manyToMany(){}
 
   showOne(){
-    if(this.isTableExist()) return this.storage.get(this.tableName);
+    if(this.isExist()) return this.storage.get(this.tableName);
 
     throw new TableDoesntExistsError(this.tableName);
   }
