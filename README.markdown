@@ -59,9 +59,10 @@
 ```typescript
   users.query.find({}).execute()
   users.query.find({name: 'Bill'}).execute()
-  user.query.find({name: 'Bill'}).where('age', '>', 20).execute()
-  user.query.find({name: 'Bill'}).where('age', '>=', 40).execute()
-  user.query.find({name: 'Bill'}).where('age', '!=', 30).execute()
+  users.query.find({name: 'Bill'}).where('age', '>', 20).execute()
+  users.query.find({name: 'Bill'}).where('age', '>=', 40).execute()
+  users.query.find({name: 'Bill'}).where('age', '!=', 30).execute()
+  users.query.find({}).limit(5).offset(4).execute()
   users.query.find({age: 20}).first().execute()
 ```
 
