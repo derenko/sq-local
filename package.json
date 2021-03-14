@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack serve",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "seed": "tsc ./seed/index.ts"
   },
   "keywords": [],
   "author": "",

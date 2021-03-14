@@ -1,9 +1,10 @@
 import { StorageConnector } from '@app/storage';
 import { TableAlreadyExistsError, TableDoesntExistsError } from '@app/errors';
 import { QueryStatement } from '@app/query-statement';
+
 export class Table<T> {
   readonly query = new QueryStatement<T>(this.tableName);
-  private readonly storage = new StorageConnector();
+  readonly storage = new StorageConnector();
 
   constructor(
     private tableName: string
@@ -26,13 +27,7 @@ export class Table<T> {
 
     throw new TableDoesntExistsError(this.tableName);
   }
-
-  oneToOne(){}
-
-  oneToMany(){}
-
-  manyToMany(){}
-
+  
   showOne(){
     if(this.isExist()) return this.storage.get(this.tableName);
 

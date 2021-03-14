@@ -6,6 +6,13 @@ class BaseError extends Error {
   }
 }
 
+export class NotImplementedError extends BaseError{
+  constructor(private tablename: string){
+    super();
+    this.message = `Not implemented yet`;
+  }
+}
+
 export class TableAlreadyExistsError extends BaseError{
   constructor(private tablename: string){
     super();

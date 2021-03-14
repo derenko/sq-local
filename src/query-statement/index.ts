@@ -1,7 +1,7 @@
 import { QueryStatementUtil } from '@app/utils/query-statement-util';
-import { BaseModel } from '@app/model';
-import { WhereQueryConstraints } from '@app/query-statement/types';
-import { filter, orderBy } from 'lodash';
+import { BaseModel } from '@app/base-model';
+import { RequireField, WhereQueryConstraints } from '@app/query-statement/types';
+import { filter, orderBy, property } from 'lodash';
 
 export class QueryStatement<T> {
   private readonly queryStatementUtil = new QueryStatementUtil<T>(this.tableName);
@@ -9,9 +9,13 @@ export class QueryStatement<T> {
 
   constructor( private readonly tableName: string ){}
 
-  execute(){
+  execute(logResult: boolean = false){
     const result = [...this.result];
     this.result = [];
+
+    if(logResult){
+      console.log(result)
+    }
 
     return result;
   }
@@ -122,7 +126,7 @@ export class QueryStatement<T> {
    * by which you want populate to
    */
 
-  populate<I>(property: keyof T, tableName: string, populatedOnly: boolean = false){
+  populate<I extends BaseModel>(property: keyof T, tableName: string, populatedOnly: boolean = false){
     const populateFrom = this.result;
     const populateWith = this.queryStatementUtil.getTableToPopulate<I>(tableName);
 

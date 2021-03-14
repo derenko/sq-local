@@ -1,6 +1,6 @@
 export class Serializer {
   private validate(){
-    return 0;
+    return;
   }
 
   static serialize(value: Record<string, any>){

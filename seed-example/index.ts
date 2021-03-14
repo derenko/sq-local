@@ -1,23 +1,23 @@
-import { SQLocal } from "@app/sqlocal";
-import { BaseModel } from "@app/model";
+import { BaseModel } from '@app';
+import { SQLocal } from '@app';
 
-export const db = new SQLocal();
+const db = new SQLocal();
 
-export interface User extends BaseModel {
+interface User extends BaseModel {
   name: string,
   age: number,
   sex: string,
-  pet?: string | Pet
+  pet?: string | string[] | Pet | Pet[]
 }
 
-export interface Pet extends BaseModel {
+interface Pet extends BaseModel {
   name: string
 }
 
-export const users = db.table<User>('users');
-export const pets = db.table<Pet>('pets');
+const users = db.table<User>('users');
+const pets = db.table<Pet>('pets');
 
-export function seed(){
+export function insertQuerySeed(){
   const [ bill, jhon, miranda, evan ] = users.query.insert(
     [
       { name: 'Bill', age: 20, sex: 'male' }, 
@@ -46,10 +46,12 @@ export function seed(){
     ]
   );
 
-  users.query.update({_id: bill._id}, {pet: jack._id});
+  users.query.update({_id: bill._id}, {pet: [ jack._id, boo._id ]});
   users.query.update({_id: jhon._id}, {pet: boo._id});
   users.query.update({_id: evan._id}, {pet: batman._id});
-  
-  users.query.find({sex: 'male'}, ['age', 'pet']).populate<Pet>('pet', 'pets').execute()
+}
+
+export function findQuerySeed(){
+  users.query.find({sex: 'male'}, ['name', 'pet']).populate<Pet>('pet', 'pets', true).execute(true);
 }
 

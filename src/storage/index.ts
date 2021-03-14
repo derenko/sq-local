@@ -1,6 +1,6 @@
 import { Serializer } from '@app/utils/serizalizer';
 
-interface IStorageConnector {
+export interface IStorageConnector {
   readonly storage: Storage,
 
   set(key: string, value: any): Record<string, any>

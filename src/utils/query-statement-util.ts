@@ -1,8 +1,8 @@
 import { StorageConnector } from '@app/storage';
 import { v4 as uuid } from 'uuid';
 import { isDeepEquality } from '@app/utils/deep-equality';
-import { filter, pick } from 'lodash';
-import { BaseModel } from '@app/model';
+import pick from 'lodash/pick';
+import { BaseModel } from '@app/base-model';
 
 export class QueryStatementUtil<T> {
   private readonly storage = new StorageConnector();
@@ -88,18 +88,21 @@ export class QueryStatementUtil<T> {
     return columns ? records.map(record => pick(record, columns)) : records;
   }
 
-  populateRecords<I>(property: keyof T, populateFrom: Array<T> | Array<Partial<T>>, populateWith: Array<I>){
-    const result = populateFrom.map((populateFromRecord: T) => {
-      const _id = populateFromRecord[property] ? populateFromRecord[property] : null;
-
-      const [ populateWithRecord ] = <Array<I>>filter(populateWith, { _id })
+  populateRecords<I extends BaseModel>(property: keyof T, populateFrom: Array<T> | Array<Partial<T>>, populateWith: Array<I>){
+    return populateFrom.map((populateFromRecord: T) => {
+      const _id = populateFromRecord[property] ? populateFromRecord[property] : null as string | null; 
       
+      const populateWithRecords = populateWith.filter(record => {
+        const recordId = record._id;
+        return Array.isArray(_id) ? _id.includes(recordId) : recordId === _id;
+      });
+
+      const populateWithRecord = !Array.isArray(_id) ? populateWithRecords[0] : populateWithRecords;
+
       return {
         ...populateFromRecord,
         [property]: populateWithRecord ? populateWithRecord : null
       }
     })
-
-    return result;
   }
 }
