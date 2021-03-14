@@ -42,7 +42,9 @@ export class QueryStatementUtil<T> {
    
     const records = this.get().map(record => pick(record, keys));
 
-    records.map((record, index) => isDeepEquality(record, query) ? indexes.push(index) : null );
+    records.forEach((record, index) => {
+      if(isDeepEquality(record, query)) indexes.push(index);
+    });
 
     return indexes;
   }
