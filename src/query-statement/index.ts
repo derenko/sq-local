@@ -1,7 +1,7 @@
 import { QueryStatementUtil } from '@app/utils/query-statement-util';
 import { BaseModel } from '@app/base-model';
-import { RequireField, WhereQueryConstraints } from '@app/query-statement/types';
-import { filter, orderBy, property } from 'lodash';
+import { WhereQueryConstraints } from '@app/query-statement/types';
+import orderBy from 'lodash/orderBy';
 
 export class QueryStatement<T> {
   private readonly queryStatementUtil = new QueryStatementUtil<T>(this.tableName);

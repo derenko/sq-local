@@ -1,12 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-  mode: 'development',
+const config = {
   entry: {
     app: './src/index.ts',
   },
-  devtool: 'inline-source-map',
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
@@ -33,8 +31,16 @@ module.exports = {
     }),
   ],
   output: {
-    filename: 'bundle.js',
+    filename: 'index.min.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
+}
+
+module.exports = (env, argv) => {
+  if (argv.mode === 'development') {
+    config.devtool = 'source-map';
+  }
+
+  return config;
 };
